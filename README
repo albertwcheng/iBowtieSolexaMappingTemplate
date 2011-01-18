@@ -1,0 +1,19 @@
+
+Please make sure you know the type of solexa output files you have in the solexaOutput directory
+
+If you don't know, there is a script that you can use to "guess" the type. The script is guessFastQTypeForFiles.sh included in the albert-bioinformatics-scripts toolbox (https://github.com/albertwcheng/albert-bioinformatics-scripts)
+
+e.g., for a solexa file s_5_sequence.txt
+
+guessFastQTypeForFiles.sh s_5_sequence.txt
+will give you a file s_5_sequence.txt.guess with content:
+
+s_5_sequence.txt        ILLUMINASOLEXA1.3+|SOLEXA|SANGER        BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB    36      36
+
+giving you the name of the file, the guess (in highest to lowest probability of the qual string format) then the sample quality string in the file which determines its highest probability guess, the min length of sequence and max length of sequence in the file
+
+for ILLUMINASOLEXA1.3+, you should run bowtie with the flag --solexa1.3-quals
+for SOLEXA, use --solexa-quals
+
+22:24
+bash iBowtie_mapSelexa_full.sh 36 14 mm8 txt "--solexa1.3-quals" 
