@@ -1,4 +1,3 @@
-
 Please make sure you know the type of solexa output files you have in the solexaOutput directory
 
 If you don't know, there is a script that you can use to "guess" the type. The script is guessFastQTypeForFiles.sh included in the albert-bioinformatics-scripts toolbox (https://github.com/albertwcheng/albert-bioinformatics-scripts)
@@ -15,5 +14,47 @@ giving you the name of the file, the guess (in highest to lowest probability of 
 for ILLUMINASOLEXA1.3+, you should run bowtie with the flag --solexa1.3-quals
 for SOLEXA, use --solexa-quals
 
-22:24
-bash iBowtie_mapSelexa_full.sh 36 14 mm8 txt "--solexa1.3-quals" 
+usage:  iBowtie_mapSelexa_full.sh readLength limitLength[14] genome[hg18|mm9] extReadFiles[txt,fastq,...] bowtieQualFlag['','--solexa1.3-quals','--solexa-quals' etc see bowtie manual for details for the first run only] extOptsToBowtie[e.g., --best] useCluster[y|n]
+
+e.g.,
+
+bash iBowtie_mapSelexa_full.sh 36 14 mm8 txt --solexa1.3-quals "--best" y 
+
+will run on script on cluster
+
+bash iBowtie_mapSelexa_full.sh 36 14 mm8 txt --solexa1.3-quals "--best" n 
+
+will run the script standalone
+
+The mm8 file is
+
+bgenome=/lab/jaenisch_albert/genomes/mm8/bowtieIndex/mm8
+chrSizes=/lab/jaenisch_albert/genomes/mm8/mm8_nr.sizes
+
+where bgenome is the bowtie index, chrSizes contain a list of chromosomes and their sizes separated by tab
+for mm8, it is 
+
+chr10   129959148
+chr11   121798632
+chr12   120463159
+chr13   120614378
+chr14   123978870
+chr15   103492577
+chr16   98252459
+chr17   95177420
+chr18   90736837
+chr19   61321190
+chr1    197069962
+chr2    181976762
+chr3    159872112
+chr4    155029701
+chr5    152003063
+chr6    149525685
+chr7    145134094
+chr8    132085098
+chr9    124000669
+chrM    16299
+chrX    165556469
+chrY    16029404
+
+
