@@ -1,4 +1,9 @@
 #!/bin/sh
+
+if [ $# -ne 8 ]; then
+	echo "Usage:" $0 processPrefix leng bgenome PREFIXPATH LIMITLENGTH bowtieQualFlag chrSizes extOptsToBowtie
+fi
+
 SCRIPTNAME=$0
 processPrefix=$1
 leng=$2
@@ -7,7 +12,7 @@ PREFIXPATH=$4
 LIMITLENGTH=$5
 bowtieQualFlag=$6
 chrSizes=$7
-
+extOptsToBowtie=$8
 
 SCRIPTPATH="$PREFIXPATH/scripts"
 #BFQSPATH="$PREFIXPATH/bfqs"
@@ -16,7 +21,7 @@ MAPSPATH="$PREFIXPATH/maps"
 SELEXAOUTPUTSPATH="$PREFIXPATH/solexaOutputs"
 SELEXASPLITSPATH="$PREFIXPATH/solexaSplits"
 
-command="bowtie -S $bowtieQualFlag $bgenome $SELEXASPLITSPATH/$processPrefix.$leng.fastq $MAPSPATH/$processPrefix.$leng.sam.00 > $MAPSPATH/$processPrefix.$leng.map.stdout 2> $MAPSPATH/$processPrefix.$leng.map.stderr"
+command="bowtie $extOptsToBowtie -S $bowtieQualFlag $bgenome $SELEXASPLITSPATH/$processPrefix.$leng.fastq $MAPSPATH/$processPrefix.$leng.sam.00 > $MAPSPATH/$processPrefix.$leng.map.stdout 2> $MAPSPATH/$processPrefix.$leng.map.stderr"
 eval $command
 
 #now propagate
@@ -36,7 +41,7 @@ else
 	awk -v FS="\t" -v OFS="\t" -v newLeng=$newleng '{if(substr($0,1,1)!="@"){ if($4==0){printf("@%s\n%s\n+\n%s\n",$1,substr($10,1,newLeng),substr($11,1,newLeng));} }}' $MAPSPATH/$processPrefix.$leng.sam.00 > "$SELEXASPLITSPATH/$processPrefix.$newleng.fastq"
 	#propagate by calling myself with new length (newleng)
 	echo "propagate: $SCRIPTNAME $processPrefix $newleng $bgenome $PREFIXPATH $LIMITLENGTH"
-	eval "$SCRIPTNAME $processPrefix $newleng $bgenome $PREFIXPATH $LIMITLENGTH \"\" $chrSizes" #don't propagate quality setting because the sam file output from which the new fastq are derived from are already in the probably Phred score. [$bowtieQualFlag]
+	eval "$SCRIPTNAME $processPrefix $newleng $bgenome $PREFIXPATH $LIMITLENGTH \"\" $chrSizes \"$extOptsToBowtie\"" #don't propagate quality setting because the sam file output from which the new fastq are derived from are already in the probably Phred score. [$bowtieQualFlag]
 fi
 
 ##echo "en"
