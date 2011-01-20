@@ -57,4 +57,12 @@ chrM    16299
 chrX    165556469
 chrY    16029404
 
+----
+
+After the mapping finishes, do
+
+bash iBowtie_merge_all.sh txt y 
+bash iBowtie_merge_all.sh txt n
+
+to merge the iBowtie on either cluster (y) or standalone (n)
 
