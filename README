@@ -1,4 +1,4 @@
-Please make sure you know the type of solexa output files you have in the solexaOutput directory
+Please make sure you know the type of solexa output files you have in the solexaOutput directory (This is for single end sequencing, or treating paired end as single-end only)
 
 If you don't know, there is a script that you can use to "guess" the type. The script is guessFastQTypeForFiles.sh included in the albert-bioinformatics-scripts toolbox (https://github.com/albertwcheng/albert-bioinformatics-scripts)
 
